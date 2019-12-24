@@ -1,0 +1,36 @@
+### Get all alerts
+
+GET http://localhost:8765/alerts
+
+### filter alerts
+
+GET http://localhost:8765/alerts?is_open=true&tag=golang&user_id=1
+
+### Get all tags
+
+GET http://localhost:8765/tags
+
+### Create new alert
+
+POST http://localhost:8765/alerts
+Content-Type: application/json
+
+{
+  "user_id": 1,
+  "title": "Hello, world",
+  "description": "Lorem ipsum",
+  "tag": "java",
+  "priority": 0
+}
+
+### Assign alert
+
+PATCH http://localhost:8765/alerts/22883ca9-2779-47be-aed4-10ccbe119b9c
+Content-Type: application/json
+
+{
+  "assignee_id": 2,
+  "id": "22883ca9-2779-47be-aed4-10ccbe119b9c"
+}
+
+###
