@@ -4,7 +4,7 @@ GET http://{{host}}:{{port}}/alerts
 
 ### filter alerts
 
-GET http://{{host}}:{{port}}/alerts?is_open=true&tag=golang&user_id=1
+GET http://{{host}}:{{port}}/alerts?is_open=false&tag=java&creator_id=1
 
 ### Get all tags
 
@@ -16,7 +16,7 @@ POST http://{{host}}:{{port}}/alerts
 Content-Type: application/json
 
 {
-  "user_id": 1,
+  "creator_id": 1,
   "title": "Hello, world",
   "description": "Lorem ipsum",
   "tag": "java",
@@ -25,12 +25,13 @@ Content-Type: application/json
 
 ### Assign alert
 
-PATCH http://{{host}}:{{port}}/alerts/22883ca9-2779-47be-aed4-10ccbe119b9c
+PATCH http://{{host}}:{{port}}/alerts/2457dd72-430b-4e79-9672-780ac874470f
 Content-Type: application/json
+Accept: application/json
 
 {
   "assignee_id": 2,
-  "id": "22883ca9-2779-47be-aed4-10ccbe119b9c"
+  "id": "2457dd72-430b-4e79-9672-780ac874470f"
 }
 
 ###

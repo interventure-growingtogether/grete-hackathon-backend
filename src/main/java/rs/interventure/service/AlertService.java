@@ -30,9 +30,9 @@ public class AlertService {
       .findFirst();
   }
 
-  public List<Alert> find(String userID, String tag, Boolean isOpen) {
+  public List<Alert> find(String creatorID, String tag, Boolean isOpen) {
     return alerts.stream()
-      .filter(a -> userID == null || a.getUserID().equals(userID))
+      .filter(a -> creatorID == null || a.getCreatorID().equals(creatorID))
       .filter(a -> tag == null || a.getTag().equals(tag))
       .filter(a -> isOpen == null || a.isOpen() == isOpen)
       .collect(Collectors.toList());
@@ -40,7 +40,7 @@ public class AlertService {
 
   public Alert create(Alert alert) {
     Preconditions.checkNotNull(alert.getTitle());
-    Preconditions.checkNotNull(alert.getUserID());
+    Preconditions.checkNotNull(alert.getCreatorID());
     Preconditions.checkNotNull(alert.getDescription());
     Preconditions.checkNotNull(alert.getTag());
     Preconditions.checkNotNull(alert.getPriority());

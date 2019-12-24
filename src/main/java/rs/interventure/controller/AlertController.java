@@ -35,9 +35,9 @@ public class AlertController extends AbstractController {
   }
 
   @GetMapping
-  public ResponseEntity<?> find(@RequestParam(name = "user_id", required = false) String userID,
+  public ResponseEntity<?> find(@RequestParam(name = "creator_id", required = false) String creatorID,
       @RequestParam(required = false) String tag, @RequestParam(name = "is_open", required = false) Boolean isOpen) {
-    return ResponseEntity.ok(alertService.find(userID, tag, isOpen));
+    return ResponseEntity.ok(alertService.find(creatorID, tag, isOpen));
   }
 
   @PostMapping

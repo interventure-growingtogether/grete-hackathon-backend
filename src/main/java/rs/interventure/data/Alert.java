@@ -8,18 +8,22 @@ import java.time.ZonedDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Accessors(chain = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class Alert {
     private String id;
     private String title;
     private String description;
-    private String userID;
+    private String creatorID;
+    private String creatorName;
     private String assigneeID;
+    private String assigneeName;
     private String tag;
     private Priority priority;
     private boolean open;
