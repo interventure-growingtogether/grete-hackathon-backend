@@ -77,7 +77,7 @@ public class AlertService {
 
     PushNotificationRequest req = new PushNotificationRequest();
     req.setTopic(alert.getTag());
-    req.setTitle(alert.getDescription());
+    req.setTitle(usersByID.get(alert.getCreatorID()) + " created an alert: " + alert.getTitle());
     req.setMessage(alert.getDescription());
     req.setAlertId(alert.getId());
     notificationService.sendPushNotification(req);
