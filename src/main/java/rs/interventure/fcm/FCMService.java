@@ -52,7 +52,8 @@ public class FCMService {
     ApnsConfig apnsConfig = getApnsConfig(request.getTopic());
     return Message.builder()
       .setApnsConfig(apnsConfig).setAndroidConfig(androidConfig).setNotification(
-        new Notification(request.getTitle(), request.getMessage()));
+        new Notification(request.getTitle(), request.getMessage()))
+      .putData("alert_id", request.getAlertId());
   }
 
 }
