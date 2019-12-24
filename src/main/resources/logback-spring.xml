@@ -1,0 +1,51 @@
+<configuration>​
+
+    <springProfile name="!localhost">
+        <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+                <customFields>{"log_type":"java-logstash"}</customFields>
+                <includeMdc>false</includeMdc>
+                <timeZone>UTC</timeZone>
+                <fieldNames>
+                    <message>message</message>
+                </fieldNames>
+                <provider class="net.logstash.logback.composite.loggingevent.LoggingEventPatternJsonProvider">
+                    <pattern>
+                        {
+                        "trace": "%X{X-B3-TraceId:-}",
+                        "span": "%X{X-B3-SpanId:-}",
+                        "parent": "%X{X-B3-ParentSpanId:-}"
+                        }
+                    </pattern>
+                </provider>
+                <throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter">
+                    <maxDepthPerThrowable>30</maxDepthPerThrowable>
+                    <maxLength>2048</maxLength>
+                    <shortenedClassNameLength>30</shortenedClassNameLength>
+                    <exclude>sun\.reflect\..*\.invoke.*</exclude>
+                    <exclude>net\.sf\.cglib\.proxy\.MethodProxy\.invoke</exclude>
+                    <rootCauseFirst>true</rootCauseFirst>
+                </throwableConverter>
+            </encoder>
+        </appender>
+
+        <logger name="ch.ricardo" level="${APP_LOGGING_LEVEL:-INFO}" additivity="false">
+            <appender-ref ref="STDOUT"/>
+        </logger>
+
+        <logger name="org.springframework.boot.context" level="INFO"/>
+
+        <root level="WARN">
+            <appender-ref ref="STDOUT"/>
+        </root>
+
+    </springProfile>
+
+    <springProfile name="localhost">
+        <include resource="org/springframework/boot/logging/logback/base.xml"/>
+
+        <root level="INFO">
+            <appender-ref ref="CONSOLE" />
+        </root>
+    </springProfile>
+</configuration>
