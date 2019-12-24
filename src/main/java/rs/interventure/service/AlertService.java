@@ -3,13 +3,16 @@ package rs.interventure.service;
 import com.google.common.base.Preconditions;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import rs.interventure.data.Alert;
+import rs.interventure.data.Priority;
 import rs.interventure.fcm.PushNotificationRequest;
 import rs.interventure.fcm.PushNotificationService;
 
@@ -18,10 +21,32 @@ import rs.interventure.fcm.PushNotificationService;
 public class AlertService {
 
   private List<Alert> alerts = new ArrayList<>();
+  private Map<String, String> usersByID = new HashMap<>();
 
   private final PushNotificationService notificationService;
   {
-//    alerts.add();
+    usersByID.put("1", "Dejan");
+    usersByID.put("2", "Alex");
+    usersByID.put("3", "Ivan");
+    usersByID.put("4", "Milos");
+
+    alerts.add(generateOpenAlert("1", "JVM crash", "JVM crashes with OOM Killed", "java", Priority.LOW));
+    alerts.add(generateOpenAlert("2", "Go JSON serializer doesn't work", "Can't serialize string to decimal", "golang", Priority.MEDIUM));
+    alerts.add(generateOpenAlert("3", "K8S problem", "K8S stateful set max unavailable", "kubernetes", Priority.HIGH));
+    alerts.add(generateOpenAlert("4", "neo4j problem", "Relation belongs to relation", "neo4j", Priority.URGENT));
+    alerts.add(generateOpenAlert("4", "maven problem", "Surefire plugin doesn't work for Java14", "maven", Priority.SUPER_URGENT));
+
+  }
+
+  private Alert generateOpenAlert(String creatorID, String title, String description, String tag, Priority priority){
+    Alert alert = new Alert();
+    alert.setId(UUID.randomUUID().toString());
+    alert.setCreatedAt(ZonedDateTime.now());
+    alert.setCreatorID(creatorID).setCreatorName(usersByID.get(creatorID));
+    alert.setTitle(title).setDescription(description).setTag(tag).setPriority(priority);
+    alert.setOpen(true);
+
+    return alert;
   }
 
   public Optional<Alert> findByID(String id) {
