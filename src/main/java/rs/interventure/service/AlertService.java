@@ -79,8 +79,9 @@ public class AlertService {
     req.setTopic(alert.getTag());
     req.setTitle(alert.getDescription());
     req.setMessage(alert.getDescription());
-
+    req.setAlertId(alert.getId());
     notificationService.sendPushNotification(req);
+
     return alert;
   }
 
@@ -91,6 +92,13 @@ public class AlertService {
     });
     alert.ifPresent(a -> a.setAssigneeID(assigneeID));
     alert.ifPresent(a -> a.setOpen(false));
+
+    PushNotificationRequest req = new PushNotificationRequest();
+    req.setTopic(id);
+    req.setTitle("Your alert has bean taken by " + usersByID.get(assigneeID));
+    req.setAlertId(id);
+    notificationService.sendPushNotification(req);
+
     return alert;
   }
 }
