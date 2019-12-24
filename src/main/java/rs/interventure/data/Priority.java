@@ -1,5 +1,6 @@
 package rs.interventure.data;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -11,6 +12,11 @@ public enum Priority {
   SUPER_URGENT("super urgent");
 
   private final String name;
+
+  @JsonValue
+  public int toValue() {
+    return ordinal();
+  }
 
   @Override
   public String toString() {
